@@ -53,7 +53,7 @@ function decrypt(text,p){
   return dec;
 }
 
-MongoClient.connect('mongodb://skkumarsparsh:Extreme007@ds137230.mlab.com:37230/sparsh-database', (err, database) => {
+MongoClient.connect('mongodb://skkumarsparsh:Extreme007@ds149030.mlab.com:49030/database2', (err, database) => {
   if (err) return console.log(err)
   db = database
   app.listen(8081, () => {
@@ -83,7 +83,7 @@ app.post('/pass', function(req, res) {
 
 app.get('/main', (req, res) => {
   if(passworda!="") {
-  db.collection('quotes').find().toArray((err, result) => {
+  db.collection('userpass').find().toArray((err, result) => {
     if (err) return console.log(err)
     // renders index.ejs
     for(var i=0;i<result.length;i++)
@@ -110,7 +110,7 @@ app.post('/quotes', (req, res) => {
   req.body.username = encrypt(req.body.username,passwordu)
   req.body.password = encrypt(req.body.password,passwordu)
   req.body.verikey = encrypt(req.body.verikey,passworda)
-  db.collection('quotes').save(req.body, (err, result) => {
+  db.collection('userpass').save(req.body, (err, result) => {
     if (err) return console.log(err)
     console.log('saved to database')
     res.redirect('/main')

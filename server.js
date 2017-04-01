@@ -6,7 +6,8 @@ const session = require('express-session')
 const MongoClient = require('mongodb').MongoClient;
 var crypto = require('crypto'),
     algorithm = 'aes-256-ctr',
-    password = '';
+    verify = '',
+    passworda = '12345';
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.set('view engine', 'ejs')
@@ -36,17 +37,25 @@ function customHeaders( req, res, next ){
   next();
 }
 
+var username;
 app.use(customHeaders)
 
 function encrypt(text){
-  var cipher = crypto.createCipher(algorithm,password)
+  var cipher = crypto.createCipher(algorithm,verify)
   var crypted = cipher.update(text,'utf8','hex')
   crypted += cipher.final('hex');
   return crypted;
 }
  
 function decrypt(text){
-  var decipher = crypto.createDecipher(algorithm,password)
+  var decipher = crypto.createDecipher(algorithm,verify)
+  var dec = decipher.update(text,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
+}
+
+function decrypt(text,p){
+  var decipher = crypto.createDecipher(algorithm,p)
   var dec = decipher.update(text,'hex','utf8')
   dec += decipher.final('utf8');
   return dec;
@@ -62,7 +71,7 @@ MongoClient.connect('mongodb://skkumarsparsh:Extreme007@ds149030.mlab.com:49030/
 
 app.get('/logout', (req, res) => {
   delete req.session.auth;
-  password=""
+  verify=""
   res.send('<html></br></br></br><center><body><h4>Logged out!</h4><br/><br/><a href="/">Back to home</a></body></center></html>');
 })
 
@@ -70,12 +79,33 @@ app.get('/', (req, res) => {
   if(req.session && req.session.auth && req.session.auth.userId) {
     res.redirect('/main')
   }
-  res.sendFile(__dirname + '/pass.html')
+  res.sendFile(__dirname + '/login-page.html')
+})
+
+app.post('/login-page', function(req, res) {
+    username = req.body.username;
+    var password = req.body.password;
+    var passwordu;
+    //console.log(username)
+    //console.log(password)
+    db.collection('userpass').find().toArray((err, result) => {
+      if (err) return console.log(err)
+      for(var i=0;i<result.length;i++)
+      {
+        passwordu = decrypt(result[i].verikey,passworda)
+        if((username===decrypt(result[i].username,passwordu))&&(password===decrypt(result[i].password,passwordu)))
+        {
+            console.log('Username/Password correct')
+            return res.sendFile(__dirname + '/pass.html')
+        }
+      }
+      return res.send('<html><script>alert("Wrong Username/Password");</script><a href="/">Go back to login</a></html>')
+    })
 })
 
 app.post('/pass', function(req, res) {
-    password = req.body.key;
-    req.session.auth = {userId: password};
+    verify = req.body.key;
+    req.session.auth = {userId: verify};
     res.redirect('/main')
 })
 
@@ -83,7 +113,6 @@ app.get('/main', (req, res) => {
   if(req.session && req.session.auth && req.session.auth.userId) {
   db.collection('quotes').find().toArray((err, result) => {
     if (err) return console.log(err)
-    // renders index.ejs
     for(var i=0;i<result.length;i++)
     {
       result[i].companyname=decrypt(result[i].companyname);
