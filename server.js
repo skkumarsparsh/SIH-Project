@@ -8,7 +8,6 @@ var crypto = require('crypto'),
     algorithm = 'aes-256-ctr',
     password = '';
 
-
 app.use(bodyParser.urlencoded({extended: true}))
 app.set('view engine', 'ejs')
 
@@ -53,7 +52,7 @@ function decrypt(text){
   return dec;
 }
 
-MongoClient.connect('mongodb://skkumarsparsh:Extreme007@ds137230.mlab.com:37230/sparsh-database', (err, database) => {
+MongoClient.connect('mongodb://skkumarsparsh:Extreme007@ds149030.mlab.com:49030/database2', (err, database) => {
   if (err) return console.log(err)
   db = database
   app.listen(8080, () => {
@@ -64,7 +63,7 @@ MongoClient.connect('mongodb://skkumarsparsh:Extreme007@ds137230.mlab.com:37230/
 app.get('/logout', (req, res) => {
   delete req.session.auth;
   password=""
-  res.send('<html></br></br></br><center><body>Logged out!<br/><br/><a href="/">Back to home</a></body></center></html>');
+  res.send('<html></br></br></br><center><body><h4>Logged out!</h4><br/><br/><a href="/">Back to home</a></body></center></html>');
 })
 
 app.get('/', (req, res) => {
@@ -87,8 +86,11 @@ app.get('/main', (req, res) => {
     // renders index.ejs
     for(var i=0;i<result.length;i++)
     {
-      result[i].name=decrypt(result[i].name);
-      result[i].quote=decrypt(result[i].quote);
+      result[i].companyname=decrypt(result[i].companyname);
+      result[i].orderplaced=decrypt(result[i].orderplaced);
+      result[i].tender=decrypt(result[i].tender)
+      result[i].orderdetails=decrypt(result[i].orderdetails)
+      result[i].contactinfo=decrypt(result[i].contactinfo)
     }
     res.render('index.ejs', {quotes: result})
   })
@@ -98,8 +100,11 @@ res.redirect('/')
 })
 
 app.post('/quotes', (req, res) => {
-  req.body.name = encrypt(req.body.name)
-  req.body.quote = encrypt(req.body.quote)
+  req.body.companyname = encrypt(req.body.companyname)
+  req.body.orderplaced = encrypt(req.body.orderplaced)
+  req.body.tender=encrypt(req.body.tender)
+  req.body.orderdetails=encrypt(req.body.orderdetails)
+  req.body.contactinfo=encrypt(req.body.contactinfo)
   db.collection('quotes').save(req.body, (err, result) => {
     if (err) return console.log(err)
     console.log('saved to database')

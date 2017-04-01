@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <title>ADMIN console</title>
+    </head>
+    <div class="mdl-layout mdl-js-layout">
+        <header class="mdl-layout__header mdl-layout__header--scroll">
+            <div class="mdl-layout__header-row">
+                <div class="mdl-layout-spacer"></div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                            mdl-textfield--floating-label mdl-textfield--align-right">
+                    <label class="mdl-button mdl-js-button mdl-button--icon"
+                            for="fixed-header-drawer-exp">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <input class="mdl-textfield__input" type="text" name="sample"
+                               id="fixed-header-drawer-exp">
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">You are logged in</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="/logout">Click here to Logout</a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+            <div class="page-content">
+                <center>
+                    <br/>
+                    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp quotes"  onmousedown='return false;' onselectstart='return false;'>
+                        <thead>
+                            <tr>
+                                <th class="mdl-data-table__cell--non-numeric">Name</th>
+                                <th>Quote</th>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>Verification Key</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(var i=0; i<quotes.length; i++) {%>
+                                <tr>
+                                    <td class="mdl-data-table__cell--non-numeric"><%= quotes[i].name %></td>
+                                    <td><%= quotes[i].quote %></td>
+                                    <td><%= quotes[i].username %></td>
+                                    <td><%= quotes[i].password %></td>
+                                    <td><%= quotes[i].verikey %></td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+
+                    <form action="/quotes" method="POST">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="sample3" name="name">
+                            <label class="mdl-textfield__label" for="sample3">Name</label>
+                        </div>
+                        <br/>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="sample4" name="quote">
+                            <label class="mdl-textfield__label" for="sample4">Quote</label>
+                        </div>
+                        <br/>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="sample5" name="username">
+                            <label class="mdl-textfield__label" for="sample5">Username</label>
+                        </div>
+                        <br/>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="sample6" name="password">
+                            <label class="mdl-textfield__label" for="sample6">Password</label>
+                        </div>
+                        <br/>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="sample7" name="verikey">
+                            <label class="mdl-textfield__label" for="sample7">Verification Key</label>
+                        </div>
+                        <br/>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">SUBMIT</button>
+                    </form>
+                </center>
+            <br/>
+            <br/>
+            </div>
+        </main>
+    <footer class="mdl-mini-footer">
+        <div class="mdl-mini-footer__left-section">
+            <div class="mdl-logo">Title</div>
+            <ul class="mdl-mini-footer__link-list">
+                <li><a href="#">Help</a></li>
+                <li><a href="#">Privacy & Terms</a></li>
+            </ul>
+        </div>
+    </footer>
+    </div>
+</html>
