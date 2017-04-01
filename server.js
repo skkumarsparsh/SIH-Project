@@ -160,3 +160,26 @@ function dec2hex(s) { return (s < 15.5 ? '0' : '') + Math.round(s).toString(16);
 
         $('#otp').text(otp);
     }
+    function timer()
+{
+    var epoch = Math.round(new Date().getTime() / 1000.0);
+    var countDown = 30 - (epoch % 30);
+    if (epoch % 30 == 0) updateOtp();
+    $('#updatingIn').text(countDown);
+    
+}
+
+    $(function () {
+        updateOtp();
+
+        $('#update').click(function (event) {
+            updateOtp();
+            event.preventDefault();
+        });
+
+        $('#secret').keyup(function () {
+            updateOtp();
+        });
+        
+        setInterval(timer, 1000);
+    });
