@@ -1,0 +1,229 @@
+
+<html>
+
+<!-- This code is provided under the terms of the Creative Commons
+
+   "Attribution (CC BY)"license. Please see
+
+   http://creativecommons.org/licenses/for details -->
+
+<head>
+
+   <title>Client-side Encryption </title>
+
+   <script type="text/javascript"src="jquery-1.4.2.min.js"></script>
+
+   <script type="text/javascript"src="sha256.js"></script>
+
+   <script type="text/javascript"src="aes.js"></script>
+
+   <script type="text/javascript">
+
+   //verification hash for passcode "passcode".
+
+   //this would be provided from the database.
+
+   var GLOBAL _verification _hash
+
+         = "a983169676c9fdcc852f29c013aef5f6faac345dfff472548bf93a543618d5ed";
+         
+   var GLOBAL _passcode      =null;
+16
+   var GLOBAL _encryption _key   =null;
+17
+ 
+18
+   /**
+19
+      *assume that all encrypted fields start encrypted
+20
+      */
+21
+   $(document).ready(function () {
+22
+      $(".encrypted").each(function () {
+23
+         $(this).attr("encryption _status", "encrypted");
+24
+      });
+25
+   });
+26
+ 
+27
+   /**
+28
+      *get the passcode
+29
+      */
+30
+   $(document).ready(function () {
+31
+      if ($(".encrypted").length >0) {
+32
+         try {
+33
+            if (!GLOBAL _verification _hash) {
+34
+               throw "There is no verification hash available.";
+35
+            }
+36
+ 
+37
+            GLOBAL _passcode =prompt("Please enter your encryption passcode:", "");
+38
+            if (!GLOBAL _passcode) {
+39
+               throw "You did not enter an encryption passcode.";
+40
+            }
+41
+ 
+42
+            GLOBAL _encryption _key =SHA256.hex _sha256(GLOBAL _passcode);
+43
+ 
+44
+            if (SHA256.hex _sha256(GLOBAL _encryption _key) !=GLOBAL _verification _hash) {
+45
+               throw "The passcode you entered does not verify. "
+46
+            }
+47
+ 
+48
+            decrypt _data();
+49
+         }
+50
+         catch (error _message) {
+51
+            $(".encrypted").attr("disabled","disabled");
+52
+            alert(error _message + "Encrypted fields will be disabled.");
+53
+         }
+54
+      }
+55
+   });
+56
+ 
+57
+   /**
+58
+      *on form submission, encrypt the data
+59
+      */
+60
+   $(document).ready(function () {
+61
+      $("#encryption _form").submit(function () {
+62
+         encrypt _data();
+63
+         return true;
+64
+      });
+65
+   });
+66
+ 
+67
+   /**
+68
+      *find all encrypted encryptable fields and decrypt them.
+69
+      *use Base64 to keep characters in the printable range.
+70
+      */
+71
+   function decrypt _data () {
+72
+      $(".encrypted[encryption _status=encrypted]").each(function () {
+73
+         var encrypted _text = $(this).val();
+74
+         if (encrypted _text != "") {
+75
+            var plain _text =AesCtr.decrypt(Base64.decode(encrypted _text),
+76
+                                                                GLOBAL _encryption _key, 256);
+77
+            $(this).val(plain _text);
+78
+         }
+79
+         $(this).attr("encryption _status", "decrypted");
+80
+      });
+81
+   }
+82
+ 
+83
+   /**
+84
+      *find all decrypted encryptable fields and encrypt them.
+85
+      *use Base64 to keep characters in the printable range.
+86
+      */
+87
+   function encrypt _data () {
+88
+      $(".encrypted[encryption _status=decrypted]").each(function () {
+89
+         var plain _text = $.trim($(this).val());
+90
+         if (plain _text != "") {
+91
+            var encrypted _text =Base64.encode(AesCtr.encrypt(plain _text,
+92
+                                                                                                GLOBAL _encryption _key, 256));
+93
+            $(this).val(encrypted _text);
+94
+         }
+95
+         $(this).attr("encryption _status", "encrypted");
+96
+      });
+97
+   }
+98
+ 
+99
+   </script>
+100
+</head>
+101
+<body>
+102
+   <form id="encryption _form">
+103
+      Encrypted: <input type="text"
+
+                                    name="enc _field"
+
+                                    id="enc _field"
+
+                                    value="TkVjM1RENCtQajR6ZUIzZktRY0VrdndQVTB6Q091akQvTHpjeVE9PQ=="
+
+                                    class="encrypted"/><br/>
+
+      Unencrypted: <input type="text"
+
+                                       name="field"
+
+                                       id="field"
+
+                                       value="some unencrypted value"
+
+                                       class=""/><br/>
+
+      <input type="submit"value="Encrypt and submit"/>
+   </form>
+</body>
+</html>
