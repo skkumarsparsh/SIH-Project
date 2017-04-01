@@ -16,7 +16,7 @@ var db
 
 app.use(session({
     secret: 'someRandomSecretValue',
-    cookie: { maxAge: 1000 * 60 * 30}
+    cookie: { maxAge: 1000 * 60 * 5 }
 }));
 
 
@@ -61,12 +61,19 @@ MongoClient.connect('mongodb://skkumarsparsh:Extreme007@ds137230.mlab.com:37230/
   })
 })
 
+app.get('/logout', (req, res) => {
+  delete req.session.auth;
+  password=""
+  res.send('<html></br></br></br><center><body>Logged out!<br/><br/><a href="/">Back to home</a></body></center></html>');
+})
+
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/pass.html')
 })
 
 app.post('/pass', function(req, res) {
     password = req.body.key;
+    req.session.auth = {userId: req.name};
     res.redirect('/main')
 })
 
