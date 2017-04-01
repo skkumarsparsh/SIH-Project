@@ -68,12 +68,15 @@ app.get('/logout', (req, res) => {
 })
 
 app.get('/', (req, res) => {
+  if(req.session && req.session.auth && req.session.auth.userId) {
+    res.redirect('/main')
+  }
   res.sendFile(__dirname + '/pass.html')
 })
 
 app.post('/pass', function(req, res) {
     password = req.body.key;
-    req.session.auth = {userId: req.name};
+    req.session.auth = {userId: password};
     res.redirect('/main')
 })
 
