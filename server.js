@@ -80,7 +80,7 @@ app.post('/pass', function(req, res) {
 })
 
 app.get('/main', (req, res) => {
-  if(password!="") {
+  if(req.session && req.session.auth && req.session.auth.userId) {
   db.collection('quotes').find().toArray((err, result) => {
     if (err) return console.log(err)
     // renders index.ejs
