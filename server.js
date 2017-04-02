@@ -54,7 +54,7 @@ function decrypt(text){
   return dec;
 }
 
-function decrypt(text,p){
+function decrypt2(text,p){
   var decipher = crypto.createDecipher(algorithm,p)
   var dec = decipher.update(text,'hex','utf8')
   dec += decipher.final('utf8');
@@ -86,14 +86,12 @@ app.post('/login-page', function(req, res) {
     username = req.body.username;
     var password = req.body.password;
     var passwordu;
-    //console.log(username)
-    //console.log(password)
     db.collection('userpass').find().toArray((err, result) => {
       if (err) return console.log(err)
       for(var i=0;i<result.length;i++)
       {
-        passwordu = decrypt(result[i].verikey,passworda)
-        if((username===decrypt(result[i].username,passwordu))&&(password===decrypt(result[i].password,passwordu)))
+        passwordu = decrypt2(result[i].verikey,passworda)
+        if((username===decrypt2(result[i].username,passwordu))&&(password===decrypt2(result[i].password,passwordu)))
         {
             console.log('Username/Password correct')
             return res.sendFile(__dirname + '/pass.html')

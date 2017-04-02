@@ -7,32 +7,28 @@
         <meta charset="UTF-8">
         <title>ADMIN console</title>
     </head>
-    <div class="mdl-layout mdl-js-layout">
-        <header class="mdl-layout__header mdl-layout__header--scroll">
-            <div class="mdl-layout__header-row">
-                <div class="mdl-layout-spacer"></div>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                            mdl-textfield--floating-label mdl-textfield--align-right">
-                    <label class="mdl-button mdl-js-button mdl-button--icon"
-                            for="fixed-header-drawer-exp">
-                        <i class="material-icons">search</i>
-                    </label>
-                    <div class="mdl-textfield__expandable-holder">
-                        <input class="mdl-textfield__input" type="text" name="sample"
-                               id="fixed-header-drawer-exp">
-                    </div>
-                </div>
-            </div>
-        </header>
-        <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">You are logged in</span>
-            <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="/logout">Click here to Logout</a>
-            </nav>
-        </div>
-        <main class="mdl-layout__content">
-            <div class="page-content">
-                <center>
+    <!-- Simple header with scrollable tabs. -->
+<div class="mdl-layout mdl-js-layout">
+  <header class="mdl-layout__header mdl-layout__header--scroll">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">ADMIN CONSOLE</span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation -->
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="/logout">LOGOUT</a>
+      </nav>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title"></span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" href="/admin-disp">Authentication</a>
+    </nav>
+  </div>
+  <main class="mdl-layout__content">
+    <div class="page-content"><center>
                     <br/>
                     <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp quotes"  onmousedown='return false;' onselectstart='return false;'>
                         <thead>
@@ -90,11 +86,11 @@
                         <br/>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">SUBMIT</button>
                     </form>
-                </center>
-            <br/>
-            <br/>
-            </div>
-        </main>
+                </center></div>
+  </main>
+  <br/>
+  <br/>
+  <br/>
     <footer class="mdl-mini-footer">
         <div class="mdl-mini-footer__left-section">
             <div class="mdl-logo">Title</div>

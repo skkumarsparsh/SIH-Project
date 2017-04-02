@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <title>Authorization</title>
+    </head>
+    <div class="mdl-layout mdl-js-layout">
+  <header class="mdl-layout__header mdl-layout__header--scroll">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">Authourization</span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation -->
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="/logout">LOGOUT</a>
+      </nav>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title"></span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" href="/main">Admin Console</a>
+    </nav>
+  </div>
+  <main class="mdl-layout__content">
+    <div class="page-content">
+        <center>
+            <br/>
+            <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp admin"  onmousedown='return false;' onselectstart='return false;'>
+                <thead>
+                    <tr>
+                        <th class="mdl-data-table__cell--non-numeric">Tender Name</th>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Verification</th>
+                        <th>Authourization</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(var i=0; i<admin.length; i++) {%>
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric"><%= admin[i].tendername %></td>
+                            <td><%= admin[i].userid %></td>
+                            <td><%= admin[i].username %></td>
+                            <td><%= admin[i].verification %></td>
+                            <td><%= admin[i].auth %></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <form action="/admin" method="POST">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="sample3" name="tendername">
+                    <label class="mdl-textfield__label" for="sample3">Tender Name</label>
+                </div>
+                <br/>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="sample4" name="userid">
+                    <label class="mdl-textfield__label" for="sample4">User ID</label>
+                </div>
+                <br/>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="sample5" name="username">
+                    <label class="mdl-textfield__label" for="sample5">Username</label>
+                </div>
+                <br/>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="sample6" name="verification">
+                    <label class="mdl-textfield__label" for="sample6">Verification</label>
+                </div>
+                <br/>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="sample7" name="auth">
+                    <label class="mdl-textfield__label" for="sample7">Authourization</label>
+                </div>
+                <br/>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">SUBMIT</button>
+            </form>
+        </center>
+    </div>

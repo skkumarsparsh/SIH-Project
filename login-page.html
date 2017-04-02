@@ -7,26 +7,64 @@
   <meta charset="UTF-8">
   <title>Login</title>
 </head>
-<img src="https://pbs.twimg.com/profile_images/816605923829387264/_u9HuAx6.jpg" align="right" height="250px" width="200px"\>
-<center>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+<!-- Uses a transparent header that draws on top of the layout's background -->
+<style>
+.demo-layout-transparent {
+  background: url('http://www.sunfishproject.eu/wp-content/uploads/2015/02/banner3.jpg') center / cover;
+}
+.demo-layout-transparent .mdl-layout__header,
+.demo-layout-transparent .mdl-layout__drawer-button {
+  /* This background is dark, so we set text to white. Use 87% black instead if
+     your background is light. */
+  color: white;
+}
+</style>
+
+<div class="demo-layout-transparent mdl-layout mdl-js-layout">
+  <header class="mdl-layout__header mdl-layout__header--transparent">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title"></span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation -->
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+      </nav>
+    </div>
+  </header>
+  <main class="mdl-layout__content">
 <form action="/login-page" method="POST">
-  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" id="sample10" name="username">
+<div style="padding-left: 45px">
+  <div style="padding-left: 40px">
+  <img src="https://pbs.twimg.com/profile_images/816605923829387264/_u9HuAx6.jpg" height = "225px" width = "225px"</>
+  </div>
+<div style="padding-left: 95px">
+<br/>
+<br/>
+<h3><font color="#FFFFFF">LOGIN</font></h3>
+</div>
+<br/>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-color-text--grey-50">
+    <input class="mdl-textfield__input" type="text" id="sample10" name="username" required>
     <label class="mdl-textfield__label" for="sample10">Username</label>
   </div>
   <br/>
-  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" id="sample11" name="password">
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-color-text--grey-50">
+    <input class="mdl-textfield__input" type="password" id="sample11" name="password" required>
     <label class="mdl-textfield__label" for="sample11">Password</label>
   </div>
   <br/>
+  <br/>
+  <br/>
+  <div style="padding-left: 105px">
   <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Submit</button>
+  </div>
+  </div>
 </form>
-</center>
 </html>
+  </main>
+</div>
